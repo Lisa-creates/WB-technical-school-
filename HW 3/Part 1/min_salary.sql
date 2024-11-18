@@ -1,5 +1,22 @@
------ With window functions -------
+----- Without window functions -------
+WITH min_salary AS (
+    SELECT 
+       industry,
+       MIN(salary) AS min_sal
+    FROM salary 
+  	GROUP BY industry
+)
+SELECT 
+    first_name,
+    last_name,
+    salary,
+    s.industry,
+    first_name AS name_highest_sal
+FROM salary s
+INNER JOIN min_salary ms ON ms.min_sal = s.salary AND ms.industry = s.industry
+ORDER BY s.industry;
 
+----- With window functions -------
 WITH salary_employees AS (
     SELECT 
         first_name,
