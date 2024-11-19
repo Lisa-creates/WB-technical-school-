@@ -1,0 +1,8 @@
+SELECT "DATE"
+	, sl."SHOPNUMBER"
+    , "CATEGORY"
+	, LAG("QTY") OVER (PARTITION BY sl."SHOPNUMBER", "CATEGORY" ORDER by "DATE") AS PREV_SALES 
+FROM sales sl
+left join shops sh ON sl."SHOPNUMBER" = sh."SHOPNUMBER" 
+LEFT JOIN goods g ON g."ID_GOOD" = sl."ID_GOOD"
+WHERE "CITY" = 'СПб' 
