@@ -1,3 +1,16 @@
+        ----- Если в выводе нужно просто приписать рядом имя сотрудника, который получает самую большую зарплату в industry ------
+
+----- With window functions -------
+SELECT 
+    first_name,
+    last_name,
+    salary,
+    industry,
+	FIRST_VALUE(first_name) OVER (PARTITION BY industry ORDER BY salary ASC) AS name_highest_sal
+FROM salary
+ORDER BY industry; 
+
+            ----- Если в выводе нужно вывести только сотрудников, которые получают самую большую зарплату в industry ------
 ----- Without window functions -------
 WITH min_salary AS (
     SELECT 
