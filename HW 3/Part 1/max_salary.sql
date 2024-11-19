@@ -1,3 +1,34 @@
+        ----- Если в выводе нужно просто приписать рядом имя сотрудника, который получает самую большую зарплату в industry ------
+----- without window functions -----
+WITH max_salary AS (
+    SELECT 
+        industry,
+        MAX(salary) AS max_sal
+    FROM salary 
+    GROUP BY industry
+), 
+highest_paid_employee AS (
+    SELECT s.industry, 
+        first_name AS name_highest_sal
+    FROM salary s 
+    INNER JOIN max_salary ms ON ms.max_sal = s.salary and ms.industry = s.industry
+)
+SELECT 
+    s.first_name,
+    s.last_name,
+    s.salary,
+    s.industry,
+    h.name_highest_sal
+FROM 
+    salary s
+LEFT JOIN 
+    highest_paid_employee h ON s.industry = h.industry
+ORDER BY 
+    s.industry;
+
+
+
+            ----- Если в выводе нужно вывести только сотрудников, которые получают самую большую зарплату в industry ------
 ----- without window functions -----
 WITH max_salary AS (
     SELECT 
