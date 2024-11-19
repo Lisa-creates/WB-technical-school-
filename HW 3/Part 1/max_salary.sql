@@ -24,8 +24,17 @@ FROM
 LEFT JOIN 
     highest_paid_employee h ON s.industry = h.industry
 ORDER BY 
-    s.industry;
+    s.industry; 
 
+----- with window functions -----
+SELECT 
+    first_name,
+    last_name,
+    salary,
+    industry,
+	FIRST_VALUE(first_name) OVER (PARTITION BY industry ORDER BY salary DESC) AS name_highest_sal
+FROM salary
+ORDER BY industry; 
 
 
             ----- Если в выводе нужно вывести только сотрудников, которые получают самую большую зарплату в industry ------
